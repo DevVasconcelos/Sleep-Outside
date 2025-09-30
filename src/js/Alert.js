@@ -5,7 +5,7 @@ class Alert {
 
   async loadAlerts() {
     try {
-      const response = await fetch('/teste/json/alerts.json');
+      const response = await fetch('/Sleep-Outside/json/alerts.json');
       const alertsData = await response.json();
       return alertsData;
     } catch (error) {
