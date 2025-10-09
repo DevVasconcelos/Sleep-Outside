@@ -1,0 +1,17 @@
+[
+  {
+    "message": "Special promotion: 20% discount on all stalls!",
+    "background": "darkgreen",
+    "color": "white"
+  },
+  {
+    "message": "Free shipping on orders over $200!",
+    "background": "darkblue",
+    "color": "white"
+  },
+  {
+    "message": "Limited stock - Last units available!",
+    "background": "darkorange",
+    "color": "white"
+  }
+]
