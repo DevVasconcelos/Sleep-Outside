@@ -26,6 +26,13 @@ export default defineConfig({
           __dirname,
           "src/product_pages/northface-talus-4.html",
         ),
+        catTents: resolve(__dirname, "src/categories/tents.html"),
+        catBackpacks: resolve(__dirname, "src/categories/backpacks.html"),
+        catSleepingBags: resolve(
+          __dirname,
+          "src/categories/sleeping-bags.html",
+        ),
+        catHammocks: resolve(__dirname, "src/categories/hammocks.html"),
       },
     },
   },
