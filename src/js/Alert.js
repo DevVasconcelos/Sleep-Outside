@@ -5,7 +5,8 @@ class Alert {
 
   async loadAlerts() {
     try {
-      const response = await fetch('/Sleep-Outside/json/alerts.json');
+  // Use a relative path so alerts load correctly when published from /docs
+  const response = await fetch('./json/alerts.json');
       const alertsData = await response.json();
       return alertsData;
     } catch (error) {
