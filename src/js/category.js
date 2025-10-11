@@ -58,14 +58,60 @@ function renderProducts(products) {
   products.forEach(prod => {
     const li = document.createElement('li');
     li.className = 'product-card';
-    li.innerHTML = `
-      <a href="/product_pages/${buildProductFile(prod.name)}">
-        <img src="${prod.image}" alt="${prod.name}" />
-        <h3 class="card__brand">${prod.brand}</h3>
-        <h2 class="card__name">${prod.name}</h2>
-        ${priceMarkup(prod)}
-      </a>
-    `;
+    // build card with image element so we can attach onerror fallbacks
+    const a = document.createElement('a');
+    a.href = `/product_pages/${buildProductFile(prod.name)}`;
+
+    const img = document.createElement('img');
+    img.alt = prod.name || 'product image';
+    img.src = prod.image || '/images/noun_Tent_2517.svg';
+
+    // fallback strategy: try original, then dist/assets basename, then /assets basename, then placeholder
+    img.addEventListener('error', function handleImgError() {
+      // prevent infinite loop
+      img.removeEventListener('error', handleImgError);
+      const src = img.src || '';
+      const tryList = [];
+      try {
+        const parts = (prod.image || '').split('/');
+        const basename = parts[parts.length - 1];
+        if (basename) {
+          tryList.push(`./assets/${basename}`);
+          tryList.push(`/assets/${basename}`);
+          tryList.push(`/images/tents/${basename}`);
+        }
+      } catch (e) {
+        // ignore
+      }
+      tryList.push('/images/noun_Tent_2517.svg');
+
+      // sequentially try alternatives
+      (function tryNext(i) {
+        if (i >= tryList.length) return;
+        img.src = tryList[i];
+        // if this src errors, try the next one
+        img.addEventListener('error', function nextErr() {
+          img.removeEventListener('error', nextErr);
+          tryNext(i + 1);
+        });
+      })(0);
+    });
+
+    a.appendChild(img);
+    const brand = document.createElement('h3');
+    brand.className = 'card__brand';
+    brand.textContent = prod.brand || '';
+    const name = document.createElement('h2');
+    name.className = 'card__name';
+    name.textContent = prod.name || '';
+    a.appendChild(brand);
+    a.appendChild(name);
+    // price markup may contain HTML so keep as innerHTML
+    const priceWrapper = document.createElement('div');
+    priceWrapper.innerHTML = priceMarkup(prod);
+    a.appendChild(priceWrapper);
+
+    li.appendChild(a);
     list.appendChild(li);
   });
 }
