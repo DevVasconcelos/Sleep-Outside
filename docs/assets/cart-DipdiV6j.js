@@ -1,4 +1,4 @@
-import"./style-FabwsDIB.js";import{g as t}from"./utils-BKKPmlPP.js";function e(){const r=t("so-cart").map(c=>s(c));document.querySelector(".product-list").innerHTML=r.join("")}function s(a){return`<li class="cart-card divider">
+import"./style-ew721XO0.js";import{g as t}from"./utils-BKKPmlPP.js";function e(){const r=t("so-cart").map(c=>s(c));document.querySelector(".product-list").innerHTML=r.join("")}function s(a){return`<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${a.Image}"
